@@ -5,8 +5,8 @@ import wolframalpha
 import requests
 
 WOLFRAM_APP_ID = 'KJKLV3-YJ959ULJVY'
-UA_API_KEY = 'mz6nzfvhha2jd28ufqutjdxhdyrkp5cd',
-UA_AUTHORIZATION = 'Bearer e8a59c745466dd170e2027e99112b4a716241c50',
+UA_API_KEY = 'mz6nzfvhha2jd28ufqutjdxhdyrkp5cd'
+UA_AUTHORIZATION = 'Bearer e8a59c745466dd170e2027e99112b4a716241c50'
 
 client = wolframalpha.Client(WOLFRAM_APP_ID)
 
@@ -53,8 +53,8 @@ def get_ua_route():
         'minimum_distance': 1
     }
     headers = {
-        'Api-Key': 'mz6nzfvhha2jd28ufqutjdxhdyrkp5cd',
-        'Authorization': 'Bearer e8a59c745466dd170e2027e99112b4a716241c50',
+        'Api-Key': UA_API_KEY,
+        'Authorization': UA_AUTHORIZATION,
     }
     res = requests.get('https://oauth2-api.mapmyapi.com/v7.1/route/',
             params=payload,
