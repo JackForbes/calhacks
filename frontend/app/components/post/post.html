@@ -10,8 +10,8 @@
           class="dessert"
           ng-repeat="dessert in ctrl.chosenPleasures"
           ng-style="{ 'background-image': 'url(' + dessert.url + ')' }">
-        <div layout="column" layout-align="end end" class="pleasure-overlay">
-          <h1 class="pleasure-calories md-display-1">x{{ dessert.count }}</h1>
+        <div layout="column" layout-align="end end" class="pleasure-overlay" ng-if="dessert.count > 1">
+          <h1 class="pleasure-calories md-display-1">×{{ dessert.count }}</h1>
         </div>
       </md-grid-tile>
     </md-grid-list>
@@ -24,11 +24,11 @@
     <div class="full action-row" layout layout-align="space-between center" ng-click="ctrl.goToMap()">
       <h3 class="md-title">Walk</h3>
       <div layout layout-align="start center">
-        <md-icon class="" md-svg-icon="maps:directions_walk"></md-icon>
+        <md-icon class="distance-time-icon" md-svg-icon="maps:navigation"></md-icon>
         <h3 class="md-subhead">{{ ctrl.activities.walking.distance }}</h3>
       </div>
       <div layout layout-align="start center">
-        <md-icon class="" md-svg-icon="device:access_time"></md-icon>
+        <md-icon class="distance-time-icon" md-svg-icon="image:timelapse"></md-icon>
         <h3 class="md-subhead">{{ ctrl.activities.walking.time }}</h3>
       </div>
         <md-icon class="action" md-svg-icon="maps:directions_walk"></md-icon>
@@ -38,18 +38,28 @@
     <div class="full action-row" layout layout-align="space-between center" ng-click="ctrl.goToMap()">
       <h3 class="md-title">Run</h3>
       <div layout layout-align="start center">
-        <h3 class="md-subhead">{{ ctrl.activities.running.time }}</h3>
-        <md-icon class="action" md-svg-icon="maps:directions_run"></md-icon>
+        <md-icon class="distance-time-icon" md-svg-icon="maps:navigation"></md-icon>
+        <h3 class="md-subhead">{{ ctrl.activities.running.distance }}</h3>
       </div>
+      <div layout layout-align="start center">
+        <md-icon class="distance-time-icon" md-svg-icon="image:timelapse"></md-icon>
+        <h3 class="md-subhead">{{ ctrl.activities.running.time }}</h3>
+      </div>
+        <md-icon class="action" md-svg-icon="maps:directions_run"></md-icon>
     </div>
 
     <!-- Bike -->
     <div class="full action-row" layout layout-align="space-between center" ng-click="ctrl.goToMap()">
       <h3 class="md-title">Bike</h3>
       <div layout layout-align="start center">
-        <h3 class="md-subhead">{{ ctrl.activities.cycling.time }}</h3>
-        <md-icon class="action" md-svg-icon="maps:directions_bike"></md-icon>
+        <md-icon class="distance-time-icon" md-svg-icon="maps:navigation"></md-icon>
+        <h3 class="md-subhead">{{ ctrl.activities.cycling.distance }}</h3>
       </div>
+      <div layout layout-align="start center">
+        <md-icon class="distance-time-icon" md-svg-icon="image:timelapse"></md-icon>
+        <h3 class="md-subhead">{{ ctrl.activities.cycling.time }}</h3>
+      </div>
+        <md-icon class="action" md-svg-icon="maps:directions_bike"></md-icon>
     </div>
 
   </div>

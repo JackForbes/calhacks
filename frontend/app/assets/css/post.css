@@ -1,7 +1,6 @@
 .pleasure-overlay {
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.3);
 }
 
 .pleasure-calories {
@@ -21,4 +20,8 @@
   -webkit-border-image: -webkit-linear-gradient(to right, #FFFFFF 0%, #999999 50%, #FFFFFF 100%);
   border-image: linear-gradient(to right, #FFFFFF 0%, #999999 50%, #FFFFFF 100%);
   border-image-slice: 1;
+}
+
+.distance-time-icon {
+  color: #BDBDBD;
 }
