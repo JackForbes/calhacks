@@ -31,7 +31,10 @@ def burn():
         get_calories_from_wa(request.args['name'])
     )
     weight = float(request.args['weight'])
-    data = [{name: calories / (met * weight) for (name, met) in ACTIVITY_MET_VALUES.items()}]
+    data = [
+        {name: {'hours':  calories / (met * weight)}
+         for (name, met) in ACTIVITY_MET_VALUES.items()}
+    ]
     return jsonify({'activities': data}), 200
 
 @app.route("/")
