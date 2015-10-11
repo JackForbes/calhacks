@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 import json
+from datetime import timedelta
+from ago import human
 from flask import Flask, jsonify, render_template, request, redirect, url_for
 from flask.ext.sqlalchemy import SQLAlchemy
 from cachetools import cached, LRUCache
@@ -19,6 +21,12 @@ ACTIVITY_MET_VALUES = {
     'running': 8,
     'walking': 2,
     'cycling': 6,
+}
+
+SPEED = {
+    'running': 16,
+    'walking': 6,
+    'cycling': 25
 }
 
 app = Flask(__name__)
@@ -109,16 +117,38 @@ def pleasure():
 @app.route("/api/burn", methods=['GET'])
 def burn():
     # calories = met * weight * hours
-    calories = float(
-        request.args.get('calories') or
-        get_calories_from_wa(request.args['name'])
-    )
-    weight = float(request.args['weight'])
-    data = [
-        {name: {'hours':  calories / (met * weight)}
-         for (name, met) in ACTIVITY_MET_VALUES.items()}
-    ]
-    return jsonify({'activities': data}), 200
+    stuff = map(json.loads, request.args.getlist('stuff'))
+    amounts = ['{} of {}'.format(x['count'], x['name']) for x in stuff]
+    query = ' and '.join(amounts)
+    calories = float(get_calories_from_wa(query))
+    weight_kg = float(request.args['weight']) * 0.453592
+
+    data = {'calories': calories, 'activities' : {}}
+    for (name, met) in ACTIVITY_MET_VALUES.items():
+        hours = float(calories / (met * weight_kg))
+        delta = timedelta(hours=hours)
+        humanized = human(delta, past_tense='{}')
+        humanized = (humanized
+                     .replace(' hours', 'hr')
+                     .replace(' hour', 'hr')
+                     .replace(' minutes', 'min')
+                     .replace(' minute', 'min')
+                     .replace(',','')
+                    )
+
+        data['activities'][name] = {
+            'time': humanized,
+            'distance': '{:.1f} km'.format(hours * SPEED[name])
+        }
+
+    resp = jsonify({'activities': data})
+    resp.status_code = 200
+    resp.headers = {
+        'Access-Control-Allow-Headers': request.headers.get('Access-Control-Request-Headers'),
+        'Access-Control-Allow-Methods': request.headers.get('Access-Control-Request-Method'),
+        'Access-Control-Allow-Origin': '*'
+    }
+    return resp
 
 def get_ua_route_helper(max_distance=2000):
     """Gets nearest Under Armour routes."""
