@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import json
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, render_template, request, redirect, url_for
 from flask.ext.sqlalchemy import SQLAlchemy
 from cachetools import cached, LRUCache
 import wolframalpha
@@ -26,7 +26,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
 db = SQLAlchemy(app)
 client = wolframalpha.Client(WOLFRAM_APP_ID)
 cache = LRUCache(maxsize=256)
-
 
 class Pleasure(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -55,7 +54,7 @@ def get_getty_image_url(name):
     print(len(resp.json()['images'][0]['display_sizes']))
     return resp.json()['images'][0]['display_sizes'][0]['uri']
 
-@app.route('/api/pleasures', methods=['GET', 'POST'])
+@app.route('/api/pleasures', methods=['GET', 'POST', 'OPTIONS'])
 def pleasure():
     if request.method == 'POST':
         data = json.loads(request.data)
@@ -66,20 +65,46 @@ def pleasure():
             db.session.add(pleasure)
             db.session.commit()
 
-        return jsonify({}), 201
+        pleasures = [{
+            'id': p.id,
+            'name': p.name,
+            'url': p.url,
+            'count': 0
+        } for p in Pleasure.query.all()]
+        resp = jsonify({'pleasures': pleasures})
+        resp.status_code = 201
+        resp.headers = {
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+            'Access-Control-Allow-Origin': '*'
+        }
+        return resp
 
     elif request.method == 'GET':
         pleasures = [{
             'id': p.id,
             'name': p.name,
-            'url': p.url
+            'url': p.url,
+            'count': 0
         } for p in Pleasure.query.all()]
-        return jsonify({
-            'pleasures': {
-                'count': len(pleasures),
-                'objects': pleasures
-            }
-        }), 200
+        resp = jsonify({'pleasures': pleasures})
+        resp.status_code = 201
+        resp.headers = {
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+            'Access-Control-Allow-Origin': '*'
+        }
+        return resp
+
+    elif request.method == 'OPTIONS':
+        resp = jsonify({})
+        resp.status_code = 200
+        resp.headers = {
+            'Access-Control-Allow-Headers': request.headers['Access-Control-Request-Headers'],
+            'Access-Control-Allow-Methods': request.headers['Access-Control-Request-Method'],
+            'Access-Control-Allow-Origin': '*'
+        }
+        return resp
 
 @app.route("/api/burn", methods=['GET'])
 def burn():
@@ -111,7 +136,6 @@ def get_ua_route():
     res = requests.get('https://oauth2-api.mapmyapi.com/v7.1/route/',
             params=payload,
             headers=headers)
-    print res
     route_json = res.json()
     first_route = route_json['_embedded']['routes'][0]['_links']
     return jsonify(first_route), 200
