@@ -3,7 +3,7 @@
   angular
        .module('app.home', [])
        .controller('HomeController', [
-          'HomeService', '$mdSidenav', '$mdBottomSheet', '$mdToast', '$http', '$q',
+          'HomeService', 'constants', '$mdSidenav', '$mdBottomSheet', '$mdToast', '$http', '$q',
           HomeController
        ]);
 
@@ -15,9 +15,8 @@
    * @param avatarsService
    * @constructor
    */
-  function HomeController( HomeService, $mdSidenav, $mdBottomSheet, $mdToast, $http, $q) {
+  function HomeController( HomeService, constants, $mdSidenav, $mdBottomSheet, $mdToast, $http, $q) {
     var self = this;
-    var baseUrl = "http://74ddfc52.ngrok.com/";
 
     self.decrementCount  = decrementCount;
     self.incrementCount  = incrementCount;
@@ -27,7 +26,7 @@
 
     $http({
       method: 'GET',
-      url: baseUrl + 'api/pleasures'
+      url: constants.apiBaseUrl + 'api/pleasures'
     }).then(function successCallback(response) {
         self.desserts = [].concat(response.data.pleasures);
       }, function errorCallback(response) {
@@ -80,7 +79,7 @@
         var data = {
           name: newPleasure
         };
-        $http.post(baseUrl + 'api/pleasures', data).success(function(response, status) {
+        $http.post(constants.apiBaseUrl + 'api/pleasures', data).success(function(response, status) {
           self.desserts = response.pleasures;
           $mdToast.show(
             $mdToast.simple()
