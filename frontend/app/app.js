@@ -9,7 +9,8 @@ angular.module('myApp', [
     'app.posts',
     'app.post'
   ])
-  .config(function($routeProvider, $mdThemingProvider, $mdIconProvider) {
+  .config(function($routeProvider, $httpProvider, $mdThemingProvider, $mdIconProvider) {
+
     $routeProvider.when('/', {
       templateUrl: 'components/home/home.html'
     });

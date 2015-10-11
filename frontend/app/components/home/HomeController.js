@@ -3,7 +3,7 @@
   angular
        .module('app.home', [])
        .controller('HomeController', [
-          'HomeService', '$mdSidenav', '$mdBottomSheet', '$mdToast', '$log', '$q',
+          'HomeService', '$mdSidenav', '$mdBottomSheet', '$mdToast', '$http', '$q',
           HomeController
        ]);
 
@@ -15,7 +15,7 @@
    * @param avatarsService
    * @constructor
    */
-  function HomeController( HomeService, $mdSidenav, $mdBottomSheet, $mdToast, $log, $q) {
+  function HomeController( HomeService, $mdSidenav, $mdBottomSheet, $mdToast, $http, $q) {
     var self = this;
 
     self.decrementCount  = decrementCount;
@@ -24,11 +24,17 @@
     self.newPleasure     = '';
     self.addPleasure     = addPleasure;
 
-
-    HomeService
-      .loadAllItems()
-      .then( function( items ) {
-        self.desserts = [].concat(items.desserts);
+    $http({
+      method: 'GET',
+      url: 'http://6641235f.ngrok.com/api/pleasures'
+    }).then(function successCallback(response) {
+        self.desserts = [].concat(response.data.pleasures);
+      }, function errorCallback(response) {
+        HomeService
+          .loadAllItems()
+          .then( function( items ) {
+            self.desserts = [].concat(items.desserts);
+          });
       });
 
     /**
@@ -68,18 +74,32 @@
      */
     function addPleasure(newPleasure) {
       if (newPleasure) {
-        var newPleasureObj = {
-          name: newPleasure,
-          count: 0,
-          imgSrc: 'assets/images/desserts/img_cookie.png'
-        }
-        self.desserts.push(newPleasureObj);
-        $mdToast.show(
-          $mdToast.simple()
-            .content('Pleasure Added!')
-            .position('bottom right')
-            .hideDelay(3000)
-        );
+        var data = {
+          name: newPleasure
+        };
+        $http.post('http://6641235f.ngrok.com/api/pleasures', data).success(function(response, status) {
+          console.log('response', response);
+          self.desserts = response.pleasures;
+          $mdToast.show(
+            $mdToast.simple()
+              .content('Pleasure Added!')
+              .position('bottom right')
+              .hideDelay(3000)
+          );
+        }).error(function(data) {
+          $mdToast.show(
+            $mdToast.simple()
+              .content('Unable to add pleasure')
+              .position('bottom right')
+              .hideDelay(3000)
+          );
+        });
+
+        // var newPleasureObj = {
+        //   name: newPleasure,
+        //   count: 0,
+        //   imgSrc: 'assets/images/desserts/img_cookie.png'
+        // }
       }
     }
 

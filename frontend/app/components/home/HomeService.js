@@ -18,32 +18,32 @@
           id: 1,
           name: "Beer",
           count: 0,
-          imgSrc: "assets/images/desserts/img_beer.png"
+          url: "assets/images/desserts/img_beer.png"
         }, {
           id: 2,
           name: "Donut",
           count: 0,
-          imgSrc: "assets/images/desserts/img_donut.png"
+          url: "assets/images/desserts/img_donut.png"
         }, {
           id: 3,
           name: "Chocolate",
           count: 0,
-          imgSrc: "assets/images/desserts/img_chocolate.png"
+          url: "assets/images/desserts/img_chocolate.png"
         }, {
           id: 4,
           name: "Ice Cream",
           count: 0,
-          imgSrc: "assets/images/desserts/img_icecream.png"
+          url: "assets/images/desserts/img_icecream.png"
         }, {
           id: 5,
           name: "Cookies",
           count: 0,
-          imgSrc: "assets/images/desserts/img_cookie.png"
+          url: "assets/images/desserts/img_cookie.png"
         }, {
           id: 6,
           name: "Cupcake",
           count: 0,
-          imgSrc: "assets/images/desserts/img_cupcake.png"
+          url: "assets/images/desserts/img_cupcake.png"
       }]
     };
 

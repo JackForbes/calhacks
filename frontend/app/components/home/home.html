@@ -20,7 +20,7 @@
       <md-grid-tile
           class="dessert"
           ng-repeat="dessert in homeCtrl.desserts"
-          ng-style="{ 'background-image': 'url(' + dessert.imgSrc + ')' }">
+          ng-style="{ 'background-image': 'url(' + dessert.url + ')' }">
         <div layout layout-align="space-between center"
             class="dessert-count"
             ng-class="{ 'chosen': dessert.count > 0 }">
