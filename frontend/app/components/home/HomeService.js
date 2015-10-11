@@ -15,23 +15,35 @@
   function HomeService($q) {
     var items = {
       desserts: [{
+          id: 1,
           name: "Beer",
-          imgSrc: "assets/images/desserts/img_beer.png",
+          count: 0,
+          imgSrc: "assets/images/desserts/img_beer.png"
         }, {
+          id: 2,
           name: "Donut",
-          imgSrc: "assets/images/desserts/img_donut.png",
+          count: 0,
+          imgSrc: "assets/images/desserts/img_donut.png"
         }, {
+          id: 3,
           name: "Chocolate",
-          imgSrc: "assets/images/desserts/img_chocolate.png",
+          count: 0,
+          imgSrc: "assets/images/desserts/img_chocolate.png"
         }, {
+          id: 4,
           name: "Ice Cream",
-          imgSrc: "assets/images/desserts/img_icecream.png",
+          count: 0,
+          imgSrc: "assets/images/desserts/img_icecream.png"
         }, {
+          id: 5,
           name: "Cookies",
-          imgSrc: "assets/images/desserts/img_cookie.png",
+          count: 0,
+          imgSrc: "assets/images/desserts/img_cookie.png"
         }, {
+          id: 6,
           name: "Cupcake",
-          imgSrc: "assets/images/desserts/img_cupcake.png",
+          count: 0,
+          imgSrc: "assets/images/desserts/img_cupcake.png"
       }]
     };
 

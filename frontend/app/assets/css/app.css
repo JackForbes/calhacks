@@ -25,13 +25,22 @@ md-toolbar h1 {
 .hamburgerMenu {
   color: rgba(0, 0, 0, 0.8); }
 
+.toolbar-logo {
+  margin-left: 5px !important;
+  font-size: 26px !important;
+  font-family: 'Aladin', cursive;
+  text-transform: none;
+}
+
 /* Sidenav area */
 .sidenav {
   background-color: #FEFEFE;
-  background-image: url("../images/sidenav-background.jpg");
-  background-size: cover;
-  background-position: top center;
-  background-repeat: no-repeat; }
+  /*background-image: url("../images/sidenav-background.jpg");*/
+  /*background-size: cover;*/
+  /*background-position: top center;*/
+  /*background-repeat: no-repeat;*/
+  background-image: linear-gradient(to bottom, #4CAF50, #81C784);
+}
 
 .sidenav-content {
   background: transparent; }
@@ -51,12 +60,12 @@ md-toolbar h1 {
 
 .name-description {
   margin: 0px 15px 0px 3px;
-  color: #757575;
+  color: #F5F5F5;
 }
 
- .name-icon {
-   margin: 0px;
-  color: #757575;
+.name-icon {
+  margin: 0px;
+  color: #F5F5F5;
 }
 
 .navTitle, .navIcon {

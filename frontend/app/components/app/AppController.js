@@ -1,9 +1,9 @@
 (function(){
 
   angular
-       .module('app', ['ngNewRouter'])
+       .module('app', [])
        .controller('AppController', [
-          'AppService', '$router', '$mdSidenav', '$mdBottomSheet', '$mdDialog', '$log', '$q',
+          'AppService', '$mdSidenav', '$mdBottomSheet', '$mdDialog', '$location', '$q',
           AppController
        ]);
 
@@ -15,28 +15,16 @@
    * @param avatarsService
    * @constructor
    */
-  function AppController( AppService, $router, $mdSidenav, $mdBottomSheet, $mdDialog, $log, $q) {
-    $router.config([
-      {
-        path: '/',
-        components: {
-          'home': 'home'
-        }
-      }
-    ]);
-
+  function AppController( AppService, $mdSidenav, $mdBottomSheet, $mdDialog, $location, $q) {
     var self = this;
 
     self.selected           = null;
     self.toggleNav          = toggleNav;
-    self.openLoginMenu      = openLoginMenu;
-    self.login              = login;
     self.share              = share;
-    self.input              = getInputObj();
-    self.cities             = loadAllCities();
-    self.querySearch        = querySearch;
-    self.selectedItemChange = selectedItemChange;
-    self.searchTextChange   = searchTextChange;
+    self.showAddPleasure    = false;
+    self.toggleAddPleasure  = toggleAddPleasure;
+    self.chosenPleasures    = [];
+    self.submitPleasures = submitPleasures;
 
 
     // Load all registered items
@@ -53,60 +41,6 @@
     // Internal methods
     // *********************************
 
-    /**
-     * Get Default Cities
-     */
-    function getInputObj() {
-      return {
-        city: '',
-        duration: 4,
-        start: AppService.nextStartMonth
-      };
-    }
-
-    /**
-     * Search for cities... use $timeout to simulate
-     * remote dataservice call.
-     */
-    function querySearch (query) {
-      var results = query ? self.cities.filter( createFilterFor(query) ) : self.cities,
-          deferred;
-      if (self.simulateQuery) {
-        deferred = $q.defer();
-        $timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
-        return deferred.promise;
-      } else {
-        return results;
-      }
-    }
-    function searchTextChange(text) {
-    }
-    function selectedItemChange(item) {
-    }
-    /**
-     * Build `cities` list of key/value pairs
-     */
-    function loadAllCities() {
-      var allCities = 'Toronto, Vancouver, Palo Alto, Mountain View, Redwood City, San Francisco,\
-              Mississauga, Waterloo, Kitchener, Burnaby, Seattle, New York, Boston, Austin,\
-              Los Angeles, Montreal, Ottawa, Calgary, Hamilton, Markham, Ann Arbor';
-      return allCities.split(/, +/g).map( function (city) {
-        return {
-          value: city.toLowerCase(),
-          display: city
-        };
-      });
-    }
-    /**
-     * Create filter function for a query string
-     */
-    function createFilterFor(query) {
-      var lowercaseQuery = angular.lowercase(query);
-      return function filterFn(city) {
-        return (city.value.indexOf(lowercaseQuery) === 0);
-      };
-    }
-
 
     /**
      * First hide the bottomsheet IF visible, then
@@ -115,35 +49,29 @@
     function toggleNav() {
       var pending = $mdBottomSheet.hide() || $q.when(true);
 
-      pending.then(function(){
+      pending.then(function() {
         $mdSidenav('left').toggle();
       });
     }
 
     /**
-     * Mobile Login Menu
+     * Hide or Show the 'add pleasure' section
      */
-    var originatorEv;
-    function openLoginMenu($mdOpenMenu, ev) {
-      originatorEv = ev;
-      $mdOpenMenu(ev);
-    };
+    function toggleAddPleasure() {
+      self.showAddPleasure = !self.showAddPleasure;
+    }
 
     /**
-     * Mobile Login or Signup
+     * Submit Pleasures
      */
-    function login(event, type) {
-      $mdDialog.show(
-        $mdDialog.alert()
-          .targetEvent(originatorEv)
-          .clickOutsideToClose(true)
-          .parent('body')
-          .title('Login clicked!')
-          .content('Enter your email and password')
-          .ok('Login')
-      );
-      originatorEv = null;
-    };
+    function submitPleasures(desserts) {
+      desserts.forEach(function(obj) {
+        if (obj.count > 0) {
+          self.chosenPleasures.push(obj);
+        }
+      });
+      $location.path('penance');
+    }
 
     /**
      * Show the bottom sheet
@@ -159,7 +87,7 @@
           bindToController : true,
           targetEvent: $event
         }).then(function(clickedItem) {
-          clickedItem && $log.debug( clickedItem.name + ' clicked!');
+          //Do something
         });
 
         /**

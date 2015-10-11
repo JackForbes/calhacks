@@ -3,7 +3,7 @@
   /*background-image: url("../images/city-skyline.jpg");*/
   background-size: cover;
   background-position: center center;
-  height: 100%; }
+}
 
 .desserts {
   margin: 8px; }
@@ -23,13 +23,17 @@
   height: 100%;
 }
 
+.dessert-count.chosen {
+  background-color: rgba(0,0,0,0.4);
+}
+
 .plus-minus-btn:active .plus-minus {
   color: white;
 }
 
 .plus-minus {
-  width: 45px;
-  height: 45px;
+  width: 50px;
+  height: 50px;
   color: rgba(256,256,256,0.5);
 }
 
@@ -39,4 +43,10 @@
 
 .tile-title figcaption {
   margin: 0 auto;
+}
+
+.go-btn {
+  position: fixed;
+  bottom: 5px;
+  right: 5px;
 }

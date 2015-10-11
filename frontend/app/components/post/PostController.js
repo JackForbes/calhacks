@@ -1,7 +1,7 @@
 (function(){
 
   angular
-       .module('app.post', ['ngNewRouter'])
+       .module('app.post', [])
        .controller('PostController', [
           'PostService', '$mdDialog',
           PostController

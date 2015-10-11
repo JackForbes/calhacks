@@ -1,20 +1,34 @@
 <div ng-controller="HomeController as homeCtrl" class="banner home">
+
+  <!-- Add Pleasure -->
+  <div ng-show="ctrl.showAddPleasure" class="add-pleasure" layout layout-align="center center">
+    <md-input-container>
+      <label>New Pleasure Name</label>
+      <input ng-model="homeCtrl.newPleasure">
+    </md-input-container>
+    <md-button class="md-primary md-raised md-icon-button" ng-click="homeCtrl.addPleasure(homeCtrl.newPleasure)" aria-label="Add">
+      <md-icon md-svg-icon="content:add"></md-icon>
+    </md-button>
+  </div>
+
   <!-- Cities -->
   <div class="desserts">
     <md-grid-list
         md-cols="2" md-cols-gt-sm="3" md-cols-gt-lg="4"
         md-row-height="1:1"
-        md-gutter="10px" md-gutter-gt-sm="10px">
+        md-gutter="10px">
       <md-grid-tile
           class="dessert"
           ng-repeat="dessert in homeCtrl.desserts"
           ng-style="{ 'background-image': 'url(' + dessert.imgSrc + ')' }">
-        <div layout layout-align="center center" class="dessert-count">
-          <md-button class="plus-minus-btn md-icon-button" ng-click="ctrl.decrementCount()" aria-label="Remove">
+        <div layout layout-align="space-between center"
+            class="dessert-count"
+            ng-class="{ 'chosen': dessert.count > 0 }">
+          <md-button class="plus-minus-btn md-icon-button" ng-click="homeCtrl.decrementCount(dessert)" aria-label="Remove">
             <md-icon class="plus-minus" md-svg-icon="content:remove_circle_outline"></md-icon>
           </md-button>
-          <h1 class="md-display-3">1</h1>
-          <md-button class="plus-minus-btn md-icon-button" ng-click="ctrl.incrementCount()" aria-label="Add">
+          <h1 ng-show="dessert.count != 0" class="md-display-3">{{ dessert.count }}</h1>
+          <md-button class="plus-minus-btn md-icon-button" ng-click="homeCtrl.incrementCount(dessert)" aria-label="Add">
             <md-icon class="plus-minus" md-svg-icon="content:add_circle_outline"></md-icon>
           </md-button>
         </div>
@@ -24,4 +38,9 @@
       </md-grid-tile>
     </md-grid-list>
   </div>
+
+  <!-- FAB -->
+  <md-button ng-click="ctrl.submitPleasures(homeCtrl.desserts)" ng-show="homeCtrl.dessertChosen(homeCtrl.desserts)" class="go-btn md-fab md-primary" aria-label="GO">
+    <md-icon md-svg-src="content:send"></md-icon>
+  </md-button>
 </div>

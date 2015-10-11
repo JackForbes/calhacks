@@ -2,18 +2,25 @@
 
 // Declare app level module which depends on controllers, directives, filters, and services
 angular.module('myApp', [
-    'ngNewRouter',
+    'ngRoute',
     'ngMaterial',
     'app',
     'app.home',
     'app.posts',
     'app.post'
   ])
-  .config(function($mdThemingProvider, $mdIconProvider) {
-    // $routeProvider.when('/search', {
-    //   templateUrl: 'search/view/search.html',
-    //   controller: 'SearchCtrl'
-    // });
+  .config(function($routeProvider, $mdThemingProvider, $mdIconProvider) {
+    $routeProvider.when('/', {
+      templateUrl: 'components/home/home.html'
+    });
+    $routeProvider.when('/penance', {
+      templateUrl: 'components/post/post.html'
+    });
+    $routeProvider.otherwise({
+      redirectTo: '#/',
+      templateUrl: 'components/home/home.html',
+      controller: 'AppController'
+    });
 
     $mdThemingProvider.theme('default')
       .primaryPalette('green', {
