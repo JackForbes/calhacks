@@ -1,21 +1,20 @@
 #!/usr/bin/env python
-
 from flask import Flask, jsonify, render_template, request
+from cachetools import cached, LRUCache
 import wolframalpha
 
-app = Flask(__name__)
-
-# WOLFRAM API
 WOLFRAM_APP_ID = 'KJKLV3-YJ959ULJVY'
-
-client = wolframalpha.Client(WOLFRAM_APP_ID)
-
 ACTIVITY_MET_VALUES = {
     'running': 8,
     'walking': 2,
     'cycling': 6,
 }
 
+app = Flask(__name__)
+client = wolframalpha.Client(WOLFRAM_APP_ID)
+cache = LRUCache(maxsize=256)
+
+@cached(cache)
 def get_calories_from_wa(name):
     query = 'calories in {}'.format(name)
     print('WolframAlpha query: {}'.format(query))
