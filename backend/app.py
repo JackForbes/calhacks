@@ -55,7 +55,7 @@ def get_getty_image_url(name):
     print(len(resp.json()['images'][0]['display_sizes']))
     return resp.json()['images'][0]['display_sizes'][0]['uri']
 
-@app.route('/pleasures', methods=['GET', 'POST'])
+@app.route('/api/pleasures', methods=['GET', 'POST'])
 def pleasure():
     if request.method == 'POST':
         data = json.loads(request.data)
@@ -81,7 +81,7 @@ def pleasure():
             }
         }), 200
 
-@app.route("/burn", methods=['GET'])
+@app.route("/api/burn", methods=['GET'])
 def burn():
     # calories = met * weight * hours
     calories = float(
@@ -95,7 +95,7 @@ def burn():
     ]
     return jsonify({'activities': data}), 200
 
-@app.route('/ua_route', methods=['GET'])
+@app.route('/api/ua_route', methods=['GET'])
 def get_ua_route():
     """Gets Under Armour routes."""
     payload = {
