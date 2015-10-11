@@ -5,9 +5,9 @@ from flask import Flask, jsonify, render_template, request
 app = Flask(__name__)
 
 ACTIVITY_MET_VALUES = {
-    'running': 150,
-    'walking': 100,
-    'cycling': 125,
+    'running': 8,
+    'walking': 2,
+    'cycling': 6,
 }
 
 @app.route("/burn", methods=['GET'])
