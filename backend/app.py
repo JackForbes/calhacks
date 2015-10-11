@@ -142,7 +142,6 @@ def get_ua_route():
 
     first_route = route_json['_embedded']['routes'][0]['_links']
 
-# <!-- Code for embedded mapmyrun. All that needs to be changed is the route.id (in the {{}}) -->
 @app.route('/api/embedded_route', methods=['GET'])
 def test_embed():
     """Supply me with a route_id."""
