@@ -1,0 +1,25 @@
+{
+  "name": "calhacks",
+  "private": true,
+  "version": "0.0.1",
+  "homepage": "https://github.com/JackForbes/calhacks.git",
+  "license": "MIT",
+  "authors": [
+    "Jack Forbes <jackforbes24@gmail.com>"
+  ],
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "dependencies": {
+    "angular": "~1.5.x",
+    "angular-animate": "~1.5.x",
+    "angular-messages": "~1.5.x",
+    "angular-resource": "~1.5.x",
+    "angular-sanitize": "~1.5.x",
+    "angular-aria": "~1.5.x",
+    "angular-new-router": "latest",
+    "angular-material": "latest",
+    "underscore": "~1.7.0"
+  }
+}

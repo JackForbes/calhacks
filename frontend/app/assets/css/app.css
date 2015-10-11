@@ -1,0 +1,85 @@
+html, body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  height: 100%;
+  margin: 0px;
+  padding: 0px; }
+
+.full {
+  width: 100%; }
+
+.center {
+  text-align: center; }
+
+/* Toolbar area */
+.menu {
+  background-color: transparent;
+  border: none;
+  height: 38px;
+  margin: 16px;
+  width: 36px; }
+
+md-toolbar h1 {
+  margin: auto; }
+
+.hamburgerMenu {
+  color: rgba(0, 0, 0, 0.8); }
+
+/* Sidenav area */
+.sidenav {
+  background-color: #FEFEFE;
+  background-image: url("../images/sidenav-background.jpg");
+  background-size: cover;
+  background-position: top center;
+  background-repeat: no-repeat; }
+
+.sidenav-content {
+  background: transparent; }
+
+.name-container {
+  padding: 20px;
+  /*color: #424242;*/
+}
+
+.name {
+  margin: 0;
+}
+
+.name-location {
+  margin-left: 5px;
+}
+
+.name-description {
+  margin: 0px 15px 0px 3px;
+  color: #757575;
+}
+
+ .name-icon {
+   margin: 0px;
+  color: #757575;
+}
+
+.navTitle, .navIcon {
+  color: black !important; }
+
+.navTitle {
+  margin: 0 !important; }
+
+.navItem button:hover .navTitle, .navItem button:hover .navIcon {
+  color: inherit !important;
+  transition: background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); }
+
+
+.share {
+  color: white; }
+
+/*Bottom Sheet*/
+.bottomSheet .md-grid-item-content {
+  height: 96px; }
+
+.bottomSheet .md-grid-item-content md-icon {
+  height: 48px;
+  width: 48px; }
+
+.bottomSheet .md-grid-text {
+  padding-bottom: 5px; }

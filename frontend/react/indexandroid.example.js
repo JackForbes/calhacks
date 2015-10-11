@@ -14,15 +14,17 @@ var {
   Image,
   StyleSheet,
   Text,
+  ToolbarAndroid,
   View,
 } = React;
 
 var calhacks = React.createClass({
   render: function() {
     var movie = MOCKED_MOVIES_DATA[0];
+
     return (
       <View style={styles.container}>
-        <Image source={{uri: movie.posters.thumbnail}} 
+        <Image source={{uri: movie.posters.thumbnail}}
         style={styles.thumbnail} />
         <View style={styles.rightContainer}>
           <Text style={styles.title}>{movie.title}</Text>

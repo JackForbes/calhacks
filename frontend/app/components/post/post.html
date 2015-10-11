@@ -1,0 +1,67 @@
+<div ng-controller="PostController as postCtrl" layout layout-align="start start">
+
+  <!-- Left Side -->
+  <div layout="column" flex="70" flex-sm="100" layout-padding>
+    <div class="post" layout="column">
+
+      <!-- Main Image -->
+      <img class="post-image" ng-src="{{postCtrl.mockPost.imgSrc}}" />
+
+      <!-- Profile Pic, Title, Message Landlord -->
+      <div layout layout-align="space-between center">
+        <div layout>
+          <div layout="column" layout-align="start center">
+            <img class="post-headshot" ng-src="{{postCtrl.mockPost.profileImgSrc}}" alt="{{post.name}}" />
+            <h5 class="post-name">{{ postCtrl.mockPost.name }}</h5>
+          </div>
+          <div class="post-blurb" layout="column" layout-align="center start">
+            <h3 class="post-blurb-title">{{ postCtrl.mockPost.title }}</h3>
+            <div layout>
+              <h5 class="post-blurb-subtitle">{{ postCtrl.mockPost.size }}</h5>
+              <md-icon class="tile-info-stars-icon" ng-repeat="star in postCtrl.mockPost.rating | floor" md-svg-icon="action:stars"></md-icon>
+              <md-icon class="tile-info-stars-icon" ng-if="postCtrl.mockPost.rating % 1 != 0" md-svg-icon="action:star_rate"></md-icon>
+            </div>
+          </div>
+        </div>
+        <md-button class="md-primary md-raised">Message {{ postCtrl.mockPost.name }}</md-button>
+      </div>
+
+      <!-- Main Content -->
+      <div class="post-content">
+        Random text making up content
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Right Side -->
+  <div layout="column" hide-sm flex="30">
+    <div class="pane">
+
+      <div layout layout-align="start center">
+        <h2>${{ postCtrl.mockPost.price }}</h2>
+        <span>CAD</span>
+        <span>per month</span>
+      </div>
+
+      <div layout layout-align="start center">
+        <md-icon class="pane-amenity" md-svg-icon="action:home"></md-icon>
+        <span class="pane-amenity-amount">x {{ postCtrl.mockPost.bedrooms }}</span>
+        <md-icon class="pane-amenity" md-svg-icon="maps:hotel"></md-icon>
+        <span class="pane-amenity-amount">x {{ postCtrl.mockPost.beds }}</span>
+        <md-icon class="pane-amenity" md-svg-icon="maps:directions_car"></md-icon>
+        <span class="pane-amenity-amount">x {{ postCtrl.mockPost.cars }}</span>
+      </div>
+
+      <div class="post-map">
+        MAP
+      </div>
+
+      <div class="post-avail">
+        AVAILABILITY
+      </div>
+
+    </div>
+  </div>
+
+</div>

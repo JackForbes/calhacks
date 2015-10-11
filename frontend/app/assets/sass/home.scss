@@ -1,0 +1,65 @@
+/* Primary content area */
+.banner {
+  background-image: url('../images/city-skyline.jpg');
+  background-size: cover;
+  background-position: center center;
+  height: 100%;
+}
+.intro-image {
+  width: 500px;
+}
+.intro-title {
+  font-size: 30px;
+  font-weight: 300;
+}
+.intro-description {
+  font-size: 20px;
+  font-weight: 300;
+}
+
+.home {
+  .input {
+    position: absolute;
+    bottom: 50px;
+    left: 10px;
+    right: 10px;
+    color: white;
+
+    h3 {
+      margin: 0;
+    }
+  }
+  .input-city, .input-duration, .input-start {
+    margin: 0 5px;
+    padding-bottom: 0 !important;
+  }
+  .input-city input, .input-city label, .input-duration input, .input-start input {
+    color: #FFEB3B;
+    border-color: white;
+  }
+}
+.input-duration {
+  width: 35px;
+}
+.input-start {
+  width: 60px;
+}
+
+
+.cities {
+  margin: 8px;
+
+  .city {
+    background-size: cover;
+    background-position: center center;
+  }
+  .city-image {
+    width: 250px;
+  }
+  .city-name {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    right: 0;
+  }
+}

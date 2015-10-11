@@ -1,0 +1,97 @@
+$background-color: #424242;
+$primary-color: #FFEB3B;
+$profile-image-border-color: #FFFFFF;
+$bookmark-color: #F5F5F5;
+$verified-color: #4CAF50;
+$star-color: #FDD835;
+$blue: #2196F3;
+
+/* Primary content area */
+.tile {
+  position: relative;
+}
+
+.tile-content {
+  margin-right: 30px;
+}
+
+.tile-image {
+  width: 100%;
+  height: 80%;
+  background-size: cover;
+  background-position: center center;
+
+  > div {
+    position: relative;
+  }
+
+  .tile-image-price {
+    background-color: $background-color;
+    color: $primary-color;
+    margin-bottom: 20px;
+
+    > * {
+      margin: 3px;
+    }
+  }
+
+  .tile-image-headshot {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid $profile-image-border-color;
+    position: absolute;
+    right: 20px;
+    bottom: -20px;
+  }
+}
+
+.tile-info {
+  width: 100%;
+  height: 20%;
+
+  .tile-info-title {
+    margin: 0;
+    max-width: calc(100% - 70px);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .tile-info-subtitle {
+    margin: 0;
+  }
+
+  .tile-info-stars {
+    margin: 0 0 0 20px;
+    color: $star-color;
+  }
+
+  .tile-info-stars-icon {
+    margin: 0 0 0 5px;
+    height: 18px;
+    width: 18px;
+    color: $star-color;
+  }
+}
+
+.bookmark {
+  color: $bookmark-color;
+}
+
+.verified {
+  color: $verified-color;
+}
+
+.tile-avatars {
+  position: absolute;
+  top:0;
+  right:0;
+  width: 30px;
+  height: 100%;
+}
+
+.tile-avatar-anonymous {
+  color: $blue;
+  cursor: pointer;
+}

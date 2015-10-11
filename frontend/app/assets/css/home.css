@@ -1,0 +1,42 @@
+/* Primary content area */
+.banner {
+  /*background-image: url("../images/city-skyline.jpg");*/
+  background-size: cover;
+  background-position: center center;
+  height: 100%; }
+
+.desserts {
+  margin: 8px; }
+  .desserts .dessert {
+    background-size: cover;
+    background-position: center center; }
+  .desserts .dessert-image {
+    width: 250px; }
+  .desserts .dessert-name {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    right: 0; }
+
+.dessert-count {
+  width: 100%;
+  height: 100%;
+}
+
+.plus-minus-btn:active .plus-minus {
+  color: white;
+}
+
+.plus-minus {
+  width: 45px;
+  height: 45px;
+  color: rgba(256,256,256,0.5);
+}
+
+.dessert-count h1 {
+  color: white;
+}
+
+.tile-title figcaption {
+  margin: 0 auto;
+}

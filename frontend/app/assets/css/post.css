@@ -1,0 +1,33 @@
+/* Left Side */
+.post-image {
+  width: 100%;
+  height: auto; }
+
+.post-headshot {
+  width: 60px;
+  height: 60px;
+  border: 2px solid #FFFFFF; }
+
+.post-name {
+  margin: 3px; }
+
+.post-blurb {
+  padding: 3px 0px 3px 10px; }
+
+.post-blurb-title {
+  margin: 3px 0; }
+
+.post-blurb-subtitle {
+  margin: 3px 0; }
+
+.post-content {
+  height: 5000px; }
+
+/* Right Side */
+.pane-amenity {
+  color: #BDBDBD;
+  margin: 0 3px 0 0; }
+
+.pane-amenity-amount {
+  color: #BDBDBD;
+  margin: 0 10px 0 0; }

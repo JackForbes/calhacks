@@ -1,0 +1,73 @@
+html, body {
+  font-family: 'Roboto', sans-serif;
+  font-size:14px;
+  height:100%;
+  margin: 0px;
+  padding: 0px;
+}
+
+.full {
+  width: 100%;
+}
+
+.center {
+  text-align: center;
+}
+
+
+/* Toolbar area */
+.menu {
+  background-color: transparent;
+  border: none;
+  height: 38px;
+  margin: 16px;
+  width: 36px;
+}
+md-toolbar h1 {
+  margin: auto;
+}
+.hamburgerMenu {
+  color: rgba(0,0,0,.8);
+}
+
+
+/* Sidenav area */
+.sidenav {
+  background-color: #9BA7AE;
+  background-image: url('../images/grey-texture.png');
+  background-repeat: repeat;
+}
+.sidenav-content {
+  background: transparent;
+}
+
+.navTitle, .navIcon {
+  color: #FAFAFA !important;
+}
+.navTitle {
+  margin: 0 !important;
+}
+
+.navItem button:hover .navTitle, .navItem button:hover .navIcon {
+  color: inherit !important;
+  transition: background-color .4s cubic-bezier(.25,.8,.25,1);
+}
+
+.share {
+  color: rgb(255,255,255);
+}
+
+
+/*Bottom Sheet*/
+.bottomSheet .md-grid-item-content {
+  height: 96px;
+}
+
+.bottomSheet .md-grid-item-content md-icon {
+  height: 48px;
+  width: 48px;
+}
+
+.bottomSheet .md-grid-text {
+  padding-bottom: 5px;
+}

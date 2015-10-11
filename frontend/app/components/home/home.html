@@ -1,0 +1,27 @@
+<div ng-controller="HomeController as homeCtrl" class="banner home">
+  <!-- Cities -->
+  <div class="desserts">
+    <md-grid-list
+        md-cols="2" md-cols-gt-sm="3" md-cols-gt-lg="4"
+        md-row-height="1:1"
+        md-gutter="10px" md-gutter-gt-sm="10px">
+      <md-grid-tile
+          class="dessert"
+          ng-repeat="dessert in homeCtrl.desserts"
+          ng-style="{ 'background-image': 'url(' + dessert.imgSrc + ')' }">
+        <div layout layout-align="center center" class="dessert-count">
+          <md-button class="plus-minus-btn md-icon-button" ng-click="ctrl.decrementCount()" aria-label="Remove">
+            <md-icon class="plus-minus" md-svg-icon="content:remove_circle_outline"></md-icon>
+          </md-button>
+          <h1 class="md-display-3">1</h1>
+          <md-button class="plus-minus-btn md-icon-button" ng-click="ctrl.incrementCount()" aria-label="Add">
+            <md-icon class="plus-minus" md-svg-icon="content:add_circle_outline"></md-icon>
+          </md-button>
+        </div>
+        <md-grid-tile-footer class="tile-title">
+          <h2 class="md-headline">{{dessert.name}}</h2>
+        </md-grid-tile-footer>
+      </md-grid-tile>
+    </md-grid-list>
+  </div>
+</div>
