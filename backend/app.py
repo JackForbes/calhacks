@@ -1,14 +1,19 @@
 #!/usr/bin/env python
+import json
 from flask import Flask, jsonify, render_template, request
+from flask.ext.sqlalchemy import SQLAlchemy
 from cachetools import cached, LRUCache
 import wolframalpha
 import requests
 
 WOLFRAM_APP_ID = 'KJKLV3-YJ959ULJVY'
-UA_API_KEY = 'mz6nzfvhha2jd28ufqutjdxhdyrkp5cd'
-UA_AUTHORIZATION = 'Bearer e8a59c745466dd170e2027e99112b4a716241c50'
 
-client = wolframalpha.Client(WOLFRAM_APP_ID)
+UA_API_KEY = 'mz6nzfvhha2jd28ufqutjdxhdyrkp5cd',
+UA_AUTHORIZATION = 'Bearer e8a59c745466dd170e2027e99112b4a716241c50',
+
+GETTY_KEY = '3u6z26bed7k6ydnvsarzj38a'
+GETTY_SECRET = 'qYxxJ3mQ9p9K8jdV7rhtncxMyKtXedZEWFxxUMnqNkvRD'
+GETTY_BASE_URL = 'https://api.gettyimages.com/v3/search/images?fields=id,title,thumb,referral_destinations&sort_order=best'
 
 ACTIVITY_MET_VALUES = {
     'running': 8,
@@ -17,8 +22,20 @@ ACTIVITY_MET_VALUES = {
 }
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+db = SQLAlchemy(app)
 client = wolframalpha.Client(WOLFRAM_APP_ID)
 cache = LRUCache(maxsize=256)
+
+
+class Pleasure(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(60), unique=True)
+    url = db.Column(db.String(512))
+
+    def __init__(self, name, url=None):
+        self.name = name
+        self.url = url or get_getty_image_url(name)
 
 @cached(cache)
 def get_calories_from_wa(name):
@@ -29,7 +46,42 @@ def get_calories_from_wa(name):
     calories = float(pod.text.split()[0])
     return calories
 
-@app.route("/burn", methods=['GET'])
+
+@cached(cache)
+def get_getty_image_url(name):
+    params = {'phrase': name}
+    headers = {'Api-Key': GETTY_KEY}
+    resp = requests.get(GETTY_BASE_URL, headers=headers, params=params)
+    print(len(resp.json()['images'][0]['display_sizes']))
+    return resp.json()['images'][0]['display_sizes'][0]['uri']
+
+@app.route('/api/pleasures', methods=['GET', 'POST'])
+def pleasure():
+    if request.method == 'POST':
+        data = json.loads(request.data)
+        name = data['name']
+        url = data.get('url')
+        if not Pleasure.query.filter_by(name=name).first():
+            pleasure = Pleasure(name, url)
+            db.session.add(pleasure)
+            db.session.commit()
+
+        return jsonify({}), 201
+
+    elif request.method == 'GET':
+        pleasures = [{
+            'id': p.id,
+            'name': p.name,
+            'url': p.url
+        } for p in Pleasure.query.all()]
+        return jsonify({
+            'pleasures': {
+                'count': len(pleasures),
+                'objects': pleasures
+            }
+        }), 200
+
+@app.route("/api/burn", methods=['GET'])
 def burn():
     # calories = met * weight * hours
     calories = float(
@@ -43,7 +95,7 @@ def burn():
     ]
     return jsonify({'activities': data}), 200
 
-@app.route('/ua_route', methods=['GET'])
+@app.route('/api/ua_route', methods=['GET'])
 def get_ua_route():
     """Gets Under Armour routes."""
     payload = {
@@ -69,4 +121,5 @@ def hello():
     return render_template('base.html')
 
 if __name__ == "__main__":
+    db.create_all()
     app.run(debug=True)
