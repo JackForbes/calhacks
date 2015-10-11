@@ -2,7 +2,7 @@
 import json
 from datetime import timedelta
 from ago import human
-from flask import Flask, jsonify, render_template, request, redirect, url_for
+from flask import Flask, jsonify, render_template, request
 from flask.ext.sqlalchemy import SQLAlchemy
 from cachetools import cached, LRUCache
 import wolframalpha
@@ -35,6 +35,7 @@ db = SQLAlchemy(app)
 client = wolframalpha.Client(WOLFRAM_APP_ID)
 cache = LRUCache(maxsize=256)
 
+
 class Pleasure(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), unique=True)
@@ -43,6 +44,7 @@ class Pleasure(db.Model):
     def __init__(self, name, url=None):
         self.name = name
         self.url = url or get_getty_image_url(name)
+
 
 @cached(cache)
 def get_calories_from_wa(name):
@@ -61,6 +63,7 @@ def get_getty_image_url(name):
     resp = requests.get(GETTY_BASE_URL, headers=headers, params=params)
     print(len(resp.json()['images'][0]['display_sizes']))
     return resp.json()['images'][0]['display_sizes'][0]['uri']
+
 
 @app.route('/api/pleasures', methods=['GET', 'POST', 'OPTIONS'])
 def pleasure():
@@ -114,6 +117,7 @@ def pleasure():
         }
         return resp
 
+
 @app.route("/api/burn", methods=['GET'])
 def burn():
     # calories = met * weight * hours
@@ -123,7 +127,7 @@ def burn():
     calories = float(get_calories_from_wa(query))
     weight_kg = float(request.args['weight']) * 0.453592
 
-    data = {'calories': calories, 'activities' : {}}
+    data = {'calories': calories, 'activities': {}}
     for (name, met) in ACTIVITY_MET_VALUES.items():
         hours = float(calories / (met * weight_kg))
         delta = timedelta(hours=hours)
@@ -133,8 +137,8 @@ def burn():
                      .replace(' hour', 'h')
                      .replace(' minutes', 'm')
                      .replace(' minute', 'm')
-                     .replace(',','')
-                    )
+                     .replace(',', '')
+                     )
 
         data['activities'][name] = {
             'time': humanized,
@@ -150,12 +154,13 @@ def burn():
     }
     return resp
 
-def get_ua_route_helper(max_distance=2000):
+
+def get_ua_route_helper(max_distance=2000, activity_type_id=16):
     """Gets nearest Under Armour routes."""
     payload = {
         'Content-Type': 'application/json',
         'close_to_location': '37.8717,-122.2728', # hardcore hardcode berkeley
-
+        'activity_type': activity_type_id,
         'maximum_distance': max_distance,
         'minimum_distance': 1
     }
@@ -163,12 +168,14 @@ def get_ua_route_helper(max_distance=2000):
         'Api-Key': 'mz6nzfvhha2jd28ufqutjdxhdyrkp5cd',
         'Authorization': 'Bearer e8a59c745466dd170e2027e99112b4a716241c50',
     }
-    res = requests.get('https://oauth2-api.mapmyapi.com/v7.1/route/',
-            params=payload,
-            headers=headers)
+    res = requests.get(
+        'https://oauth2-api.mapmyapi.com/v7.1/route/',
+        params=payload,
+        headers=headers)
     route_json = res.json()
     first_route = route_json['_embedded']['routes'][0]['_links']
     return first_route
+
 
 @app.route('/api/ua_route', methods=['GET'])
 def get_ua_route():
@@ -178,14 +185,33 @@ def get_ua_route():
 
 
 # Note: 2000 max_distance makes for a good route
+# TODO: use distance instead of max
 @app.route('/api/nearest_embedded_route', methods=['GET'])
 def get_nearest_embedded_route():
     """Just need to provide max_distance."""
     max_distance = request.args.get('max_distance')
-    route_metadata = get_ua_route_helper(max_distance)
+    activity_type = request.args.get('activity_type')
+    activity_dict = {
+        'walking': 9,
+        'running': 16,
+        'cycling': 11
+    }
+    activity_type_id = activity_dict[activity_type]
+
+    route_metadata = get_ua_route_helper(max_distance, activity_type_id)
     route = {}
     route['id'] = route_metadata['self'][0]['id'] # wtf why is self an array?
-    return render_template('embed.html', route=route)
+    template = render_template('embed.html', route=route)
+
+    resp = jsonify({'template': template})
+    resp.status_code = 201
+    resp.headers = {
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+        'Access-Control-Allow-Origin': '*'
+    }
+    return resp
+
 
 @app.route('/api/embedded_route', methods=['GET'])
 def get_embedded_route():
@@ -197,8 +223,6 @@ def get_embedded_route():
         route['id'] = 504251502
     return render_template('embed.html', route=route)
 
-# convert time activity into alternate activities
-# def equivalent_activities
 
 @app.route("/")
 def hello():
