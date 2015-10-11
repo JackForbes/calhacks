@@ -140,6 +140,22 @@ def get_ua_route():
     first_route = route_json['_embedded']['routes'][0]['_links']
     return jsonify(first_route), 200
 
+    first_route = route_json['_embedded']['routes'][0]['_links']
+
+# <!-- Code for embedded mapmyrun. All that needs to be changed is the route.id (in the {{}}) -->
+@app.route('/api/embedded_route', methods=['GET'])
+def test_embed():
+    """Supply me with a route_id."""
+    route = {}
+    route['id'] = request.args.get('route_id')
+    # default route (for demo fallback)
+    if not route['id']:
+        route['id'] = 504251502
+    return render_template('embed.html', route=route)
+
+# convert time activity into alternate activities
+# def equivalent_activities
+
 @app.route("/")
 def hello():
     return render_template('base.html')
