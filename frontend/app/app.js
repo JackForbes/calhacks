@@ -17,6 +17,12 @@ angular.module('myApp', [
     $routeProvider.when('/penance', {
       templateUrl: 'components/post/post.html'
     });
+    $routeProvider.when('/scorecard', {
+      templateUrl: 'components/posts/posts.html'
+    });
+    $routeProvider.when('/map', {
+      templateUrl: 'components/post/map.html'
+    });
     $routeProvider.otherwise({
       redirectTo: '#/',
       templateUrl: 'components/home/home.html',

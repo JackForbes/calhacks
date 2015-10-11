@@ -3,7 +3,7 @@
   angular
        .module('app.post', [])
        .controller('PostController', [
-          'PostService', '$mdDialog',
+          'PostService', '$mdDialog', '$http', '$sce',
           PostController
        ]);
 
@@ -15,11 +15,23 @@
    * @param avatarsService
    * @constructor
    */
-  function PostController( PostService, $mdDialog) {
+  function PostController( PostService, $mdDialog, $http, $sce) {
     var self = this;
+    var baseUrl = "http://5c89e864.ngrok.com/";
 
-    self.showFilters = false;
+    self.showFilters   = false;
     self.toggleFilters = toggleFilters;
+    self.mapHtml       = '';
+
+
+    $http({
+      method: 'GET',
+      url: baseUrl + 'api/nearest_embedded_route'
+    }).then(function successCallback(response) {
+        console.log('response', response);
+        self.mapHtml = $sce.trustAsHtml(response.data.template);
+      }, function errorCallback(response) {
+      });
 
 
     // Load all registered items

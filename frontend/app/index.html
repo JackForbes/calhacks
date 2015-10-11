@@ -50,7 +50,10 @@
     <md-sidenav class="md-sidenav-left md-whiteframe-z2 sidenav" md-component-id="left">
       <md-content class="sidenav-content">
         <div class="name-container" layout="column" layout-align="start start">
-          <h1 class="name md-display-1">Evgeny</h1>
+          <div layout layout-align="start center">
+            <img class="scorecard-profile" src="assets/images/profile.jpg" alt="Evgeny" />
+            <h1 class="name md-display-1">Evgeny</h1>
+          </div>
           <div layout>
             <md-icon md-svg-icon="communication:location_on"></md-icon>
             <h3 class="md-subhead name-location">Waterloo, ON</h3>
@@ -61,12 +64,12 @@
             <md-icon class="name-icon" md-svg-icon="social:person"></md-icon>
             <h4 class="md-subhead name-description">20 yrs</h4>
             <md-icon class="name-icon" md-svg-icon="maps:directions_walk"></md-icon>
-            <h4 class="md-subhead name-description">250 lbs</h4>
+            <h4 class="md-subhead name-description">160 lbs</h4>
           </div>
         </div>
         <md-list>
           <a ng-repeat="item in ctrl.mobileNav" class="navLink">
-            <md-list-item class="md-2-line navItem" ng-click="ctrl.toggleNav()">
+            <md-list-item class="md-2-line navItem" ng-click="ctrl.navClick(item.href)">
               <md-icon md-svg-icon="{{item.svg}}" class="navIcon"></md-icon>
               <div class="md-list-item-text">
                 <h3 class="navTitle"> {{ item.title }} </h3>

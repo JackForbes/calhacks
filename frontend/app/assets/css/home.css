@@ -7,9 +7,6 @@
 
 .desserts {
   margin: 8px; }
-  .desserts .dessert {
-    background-size: cover;
-    background-position: center center; }
   .desserts .dessert-image {
     width: 250px; }
   .desserts .dessert-name {
@@ -21,6 +18,11 @@
 .dessert-count {
   width: 100%;
   height: 100%;
+}
+
+.dessert {
+  background-size: cover;
+  background-position: center center;
 }
 
 .dessert-count.chosen {

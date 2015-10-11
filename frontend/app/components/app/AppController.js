@@ -3,7 +3,7 @@
   angular
        .module('app', [])
        .controller('AppController', [
-          'AppService', '$mdSidenav', '$mdBottomSheet', '$mdDialog', '$location', '$q',
+          'AppService', '$mdSidenav', '$mdBottomSheet', '$mdDialog', '$location', '$q', '$http',
           AppController
        ]);
 
@@ -15,16 +15,20 @@
    * @param avatarsService
    * @constructor
    */
-  function AppController( AppService, $mdSidenav, $mdBottomSheet, $mdDialog, $location, $q) {
+  function AppController( AppService, $mdSidenav, $mdBottomSheet, $mdDialog, $location, $q, $http) {
     var self = this;
+    var baseUrl = "http://74ddfc52.ngrok.com/";
 
     self.selected           = null;
     self.toggleNav          = toggleNav;
+    self.navClick           = navClick;
     self.share              = share;
     self.showAddPleasure    = false;
     self.toggleAddPleasure  = toggleAddPleasure;
     self.chosenPleasures    = [];
-    self.submitPleasures = submitPleasures;
+    self.activities         = {};
+    self.submitPleasures    = submitPleasures;
+    self.goToMap            = goToMap;
 
 
     // Load all registered items
@@ -55,6 +59,21 @@
     }
 
     /**
+     * Change location
+     */
+    function navClick(href) {
+      self.toggleNav();
+      $location.path(href);
+    }
+
+    /**
+     * Change location
+     */
+    function goToMap() {
+      $location.path('map');
+    }
+
+    /**
      * Hide or Show the 'add pleasure' section
      */
     function toggleAddPleasure() {
@@ -65,11 +84,28 @@
      * Submit Pleasures
      */
     function submitPleasures(desserts) {
+      var data = {
+        weight: 160,
+        stuff: []
+      };
       desserts.forEach(function(obj) {
         if (obj.count > 0) {
+          data.stuff.push(obj);
           self.chosenPleasures.push(obj);
+          console.log('chosen pleasures', self.chosenPleasures);
         }
       });
+
+      $http({
+        method: 'GET',
+        url: baseUrl + 'api/burn',
+        params: data
+      }).then(function successCallback(response) {
+        console.log('burn response', response);
+        self.activities = response.data.activities.activities;
+        }, function errorCallback(response) {
+        });
+
       $location.path('penance');
     }
 
@@ -81,7 +117,7 @@
 
         $mdBottomSheet.show({
           parent: angular.element(document.getElementById('content')),
-          templateUrl: 'home/view/shareSheet.html',
+          templateUrl: 'components/home/view/shareSheet.html',
           controller: [ '$mdBottomSheet', TodoSheetController ],
           controllerAs: "vm",
           bindToController : true,

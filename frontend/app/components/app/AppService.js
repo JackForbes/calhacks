@@ -26,13 +26,16 @@
       mobileNav: {
         guest: [{
           title: 'Pleasures',
-          svg: 'image:tag_faces'
+          svg: 'image:tag_faces',
+          href: ''
         }, {
           title: 'Scorecard',
-          svg: 'image:grid_on'
+          svg: 'image:grid_on',
+          href: 'scorecard'
         }, {
           title: 'Logout',
-          svg: 'action:exit_to_app'
+          svg: 'action:exit_to_app',
+          href: ''
         }],
         student: [{
           title: 'Home',

@@ -5,13 +5,13 @@
     <md-grid-list
         md-cols="1" md-cols-gt-sm="2" md-cols-gt-lg="3"
         md-row-height="2:1"
-        md-gutter="10px">
+        md-gutter="2px">
       <md-grid-tile
+          class="dessert"
           ng-repeat="dessert in ctrl.chosenPleasures"
-          ng-style="{ 'background-image': 'url(' + dessert.imgSrc + ')' }">
-        <div layout="column" layout-align="center center" class="pleasure-overlay">
-          <h1 class="pleasure-calories md-display-3">{{ dessert.count }}</h1>
-          <h3 class="pleasure-calories md-headline">Calories</h3>
+          ng-style="{ 'background-image': 'url(' + dessert.url + ')' }">
+        <div layout="column" layout-align="end end" class="pleasure-overlay">
+          <h1 class="pleasure-calories md-display-1">x{{ dessert.count }}</h1>
         </div>
       </md-grid-tile>
     </md-grid-list>
@@ -21,28 +21,33 @@
   <div class="full" layout="column" layout-align="start center">
 
     <!-- Walk -->
-    <div class="full action-row" layout layout-align="space-between center">
-      <h3 class="md-subhead">Walk</h3>
+    <div class="full action-row" layout layout-align="space-between center" ng-click="ctrl.goToMap()">
+      <h3 class="md-title">Walk</h3>
       <div layout layout-align="start center">
-        <h3 class="md-subhead">25km</h3>
-        <md-icon class="action" md-svg-icon="maps:directions_walk"></md-icon>
+        <md-icon class="" md-svg-icon="maps:directions_walk"></md-icon>
+        <h3 class="md-subhead">{{ ctrl.activities.walking.distance }}</h3>
       </div>
+      <div layout layout-align="start center">
+        <md-icon class="" md-svg-icon="device:access_time"></md-icon>
+        <h3 class="md-subhead">{{ ctrl.activities.walking.time }}</h3>
+      </div>
+        <md-icon class="action" md-svg-icon="maps:directions_walk"></md-icon>
     </div>
 
     <!-- Run -->
-    <div class="full action-row" layout layout-align="space-between center">
-      <h3 class="md-subhead">Run</h3>
+    <div class="full action-row" layout layout-align="space-between center" ng-click="ctrl.goToMap()">
+      <h3 class="md-title">Run</h3>
       <div layout layout-align="start center">
-        <h3 class="md-subhead">8km</h3>
+        <h3 class="md-subhead">{{ ctrl.activities.running.time }}</h3>
         <md-icon class="action" md-svg-icon="maps:directions_run"></md-icon>
       </div>
     </div>
 
     <!-- Bike -->
-    <div class="full action-row" layout layout-align="space-between center">
-      <h3 class="md-subhead">Bike</h3>
+    <div class="full action-row" layout layout-align="space-between center" ng-click="ctrl.goToMap()">
+      <h3 class="md-title">Bike</h3>
       <div layout layout-align="start center">
-        <h3 class="md-subhead">12km</h3>
+        <h3 class="md-subhead">{{ ctrl.activities.cycling.time }}</h3>
         <md-icon class="action" md-svg-icon="maps:directions_bike"></md-icon>
       </div>
     </div>

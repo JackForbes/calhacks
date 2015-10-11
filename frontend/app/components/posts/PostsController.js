@@ -25,7 +25,7 @@
     PostsService
       .loadAllItems()
       .then( function( items ) {
-        self.mockPosts = [].concat(items.mockPosts);
+        // self.mockPosts = [].concat(items.mockPosts);
       });
 
 

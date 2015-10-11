@@ -17,6 +17,7 @@
    */
   function HomeController( HomeService, $mdSidenav, $mdBottomSheet, $mdToast, $http, $q) {
     var self = this;
+    var baseUrl = "http://74ddfc52.ngrok.com/";
 
     self.decrementCount  = decrementCount;
     self.incrementCount  = incrementCount;
@@ -26,7 +27,7 @@
 
     $http({
       method: 'GET',
-      url: 'http://6641235f.ngrok.com/api/pleasures'
+      url: baseUrl + 'api/pleasures'
     }).then(function successCallback(response) {
         self.desserts = [].concat(response.data.pleasures);
       }, function errorCallback(response) {
@@ -60,11 +61,13 @@
      */
     function dessertChosen(desserts) {
       var chosen = false;
-      desserts.forEach(function(obj) {
-        if (obj.count > 0) {
-          chosen = true;
-        }
-      });
+      if (desserts) {
+        desserts.forEach(function(obj) {
+          if (obj.count > 0) {
+            chosen = true;
+          }
+        });
+      }
 
       return chosen;
     }
@@ -77,8 +80,7 @@
         var data = {
           name: newPleasure
         };
-        $http.post('http://6641235f.ngrok.com/api/pleasures', data).success(function(response, status) {
-          console.log('response', response);
+        $http.post(baseUrl + 'api/pleasures', data).success(function(response, status) {
           self.desserts = response.pleasures;
           $mdToast.show(
             $mdToast.simple()
@@ -94,12 +96,6 @@
               .hideDelay(3000)
           );
         });
-
-        // var newPleasureObj = {
-        //   name: newPleasure,
-        //   count: 0,
-        //   imgSrc: 'assets/images/desserts/img_cookie.png'
-        // }
       }
     }
 

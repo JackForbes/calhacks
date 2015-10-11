@@ -1,65 +1,11 @@
 /* Primary content area */
-.tile {
-  position: relative; }
+.scorecard-profile {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #4CAF50;
+  border-radius: 50%;
+}
 
-.tile-content {
-  margin-right: 30px; }
-
-.tile-image {
-  width: 100%;
-  height: 80%;
-  background-size: cover;
-  background-position: center center; }
-  .tile-image > div {
-    position: relative; }
-  .tile-image .tile-image-price {
-    background-color: #424242;
-    color: #FFEB3B;
-    margin-bottom: 20px; }
-    .tile-image .tile-image-price > * {
-      margin: 3px; }
-  .tile-image .tile-image-headshot {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 2px solid #FFFFFF;
-    position: absolute;
-    right: 20px;
-    bottom: -20px; }
-
-.tile-info {
-  width: 100%;
-  height: 20%; }
-  .tile-info .tile-info-title {
-    margin: 0;
-    max-width: calc(100% - 70px);
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis; }
-  .tile-info .tile-info-subtitle {
-    margin: 0; }
-  .tile-info .tile-info-stars {
-    margin: 0 0 0 20px;
-    color: #FDD835; }
-  .tile-info .tile-info-stars-icon {
-    margin: 0 0 0 5px;
-    height: 18px;
-    width: 18px;
-    color: #FDD835; }
-
-.bookmark {
-  color: #F5F5F5; }
-
-.verified {
-  color: #4CAF50; }
-
-.tile-avatars {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 30px;
-  height: 100%; }
-
-.tile-avatar-anonymous {
-  color: #2196F3;
-  cursor: pointer; }
+.scorecard-title, .scorecard-description {
+  margin: 0 0 0 10px;
+}
