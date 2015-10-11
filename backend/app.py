@@ -15,7 +15,7 @@ def burn():
     # calories = met * weight * hours
     calories = float(request.args['calories'])
     weight = float(request.args['weight'])
-    data = [{name: float(calories) / (met * weight) for (name, met) in ACTIVITY_MET_VALUES.items()}]
+    data = [{name: calories / (met * weight) for (name, met) in ACTIVITY_MET_VALUES.items()}]
     return jsonify({'activities': data}), 200
 
 @app.route("/")
