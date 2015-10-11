@@ -120,30 +120,46 @@ def burn():
     ]
     return jsonify({'activities': data}), 200
 
-@app.route('/api/ua_route', methods=['GET'])
-def get_ua_route():
-    """Gets Under Armour routes."""
+def get_ua_route_helper(max_distance=10000):
+    """Gets nearest Under Armour routes."""
     payload = {
         'Content-Type': 'application/json',
-        'close_to_location': '37.774929,-122.41941550',
-        'maximum_distance': 10000,
+        'close_to_location': '37.8717,-122.2728', # hardcore hardcode berkeley
+
+        'maximum_distance': max_distance,
         'minimum_distance': 1
     }
     headers = {
-        'Api-Key': UA_API_KEY,
-        'Authorization': UA_AUTHORIZATION,
+        'Api-Key': 'mz6nzfvhha2jd28ufqutjdxhdyrkp5cd',
+        'Authorization': 'Bearer e8a59c745466dd170e2027e99112b4a716241c50',
     }
     res = requests.get('https://oauth2-api.mapmyapi.com/v7.1/route/',
             params=payload,
             headers=headers)
     route_json = res.json()
     first_route = route_json['_embedded']['routes'][0]['_links']
-    return jsonify(first_route), 200
+    return first_route
 
-    first_route = route_json['_embedded']['routes'][0]['_links']
+@app.route('/api/ua_route', methods=['GET'])
+def get_ua_route():
+    max_distance = request.args.get('max_distance')
+    route = get_ua_route_helper(max_distance)
+    return jsonify(route), 200
+
+
+@app.route('/api/nearest_embedded_route', methods=['GET'])
+def get_nearest_embedded_route():
+    # route = get_ua_route()
+    # print route['self']['id']
+    # route['self']['id']
+    max_distance = request.args.get('max_distance')
+    route_metadata = get_ua_route_helper(max_distance)
+    route = {}
+    route['id'] = route_metadata['self'][0]['id'] # wtf why is self an array?
+    return render_template('embed.html', route=route)
 
 @app.route('/api/embedded_route', methods=['GET'])
-def test_embed():
+def get_embedded_route():
     """Supply me with a route_id."""
     route = {}
     route['id'] = request.args.get('route_id')
