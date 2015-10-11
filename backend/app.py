@@ -150,12 +150,12 @@ def burn():
     }
     return resp
 
-def get_ua_route_helper(max_distance=2000):
+def get_ua_route_helper(max_distance=2000, activity_type_id=16):
     """Gets nearest Under Armour routes."""
     payload = {
         'Content-Type': 'application/json',
         'close_to_location': '37.8717,-122.2728', # hardcore hardcode berkeley
-
+        'activity_type': activity_type_id,
         'maximum_distance': max_distance,
         'minimum_distance': 1
     }
@@ -176,16 +176,34 @@ def get_ua_route():
     route = get_ua_route_helper(max_distance)
     return jsonify(route), 200
 
-
 # Note: 2000 max_distance makes for a good route
+# TODO: use distance instead of max
 @app.route('/api/nearest_embedded_route', methods=['GET'])
 def get_nearest_embedded_route():
     """Just need to provide max_distance."""
     max_distance = request.args.get('max_distance')
-    route_metadata = get_ua_route_helper(max_distance)
+    activity_type = request.args.get('activity_type')
+    activity_dict = {
+        'walking': 9,
+        'running': 16,
+        'cycling': 11
+    }
+    activity_type_id = activity_dict[activity_type]
+
+    route_metadata = get_ua_route_helper(max_distance, activity_type_id)
     route = {}
     route['id'] = route_metadata['self'][0]['id'] # wtf why is self an array?
-    return render_template('embed.html', route=route)
+    template = render_template('embed.html', route=route)
+
+
+    resp = jsonify({'template': template})
+    resp.status_code = 201
+    resp.headers = {
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+        'Access-Control-Allow-Origin': '*'
+    }
+    return resp
 
 @app.route('/api/embedded_route', methods=['GET'])
 def get_embedded_route():
