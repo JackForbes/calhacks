@@ -129,10 +129,10 @@ def burn():
         delta = timedelta(hours=hours)
         humanized = human(delta, past_tense='{}')
         humanized = (humanized
-                     .replace(' hours', 'hr')
-                     .replace(' hour', 'hr')
-                     .replace(' minutes', 'min')
-                     .replace(' minute', 'min')
+                     .replace(' hours', 'h')
+                     .replace(' hour', 'h')
+                     .replace(' minutes', 'm')
+                     .replace(' minute', 'm')
                      .replace(',','')
                     )
 
