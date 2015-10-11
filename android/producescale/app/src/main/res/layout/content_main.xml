@@ -11,4 +11,10 @@
 
     <TextView android:text="Hello World!" android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <com.ericye16.producescale.MainActivity.RecordButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <com.ericye16.producescale.MainActivity.PlayButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </RelativeLayout>
