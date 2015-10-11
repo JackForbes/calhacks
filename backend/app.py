@@ -120,7 +120,7 @@ def burn():
     ]
     return jsonify({'activities': data}), 200
 
-def get_ua_route_helper(max_distance=10000):
+def get_ua_route_helper(max_distance=2000):
     """Gets nearest Under Armour routes."""
     payload = {
         'Content-Type': 'application/json',
@@ -147,11 +147,10 @@ def get_ua_route():
     return jsonify(route), 200
 
 
+# Note: 2000 max_distance makes for a good route
 @app.route('/api/nearest_embedded_route', methods=['GET'])
 def get_nearest_embedded_route():
-    # route = get_ua_route()
-    # print route['self']['id']
-    # route['self']['id']
+    """Just need to provide max_distance."""
     max_distance = request.args.get('max_distance')
     route_metadata = get_ua_route_helper(max_distance)
     route = {}
