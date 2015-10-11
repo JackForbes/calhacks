@@ -3,7 +3,7 @@
   angular
        .module('app', [])
        .controller('AppController', [
-          'AppService', '$mdSidenav', '$mdBottomSheet', '$mdDialog', '$location', '$q', '$http',
+          'AppService', 'constants', '$mdSidenav', '$mdBottomSheet', '$mdDialog', '$location', '$q', '$http',
           AppController
        ]);
 
@@ -15,9 +15,8 @@
    * @param avatarsService
    * @constructor
    */
-  function AppController( AppService, $mdSidenav, $mdBottomSheet, $mdDialog, $location, $q, $http) {
+  function AppController( AppService, constants, $mdSidenav, $mdBottomSheet, $mdDialog, $location, $q, $http) {
     var self = this;
-    var baseUrl = "http://74ddfc52.ngrok.com/";
 
     self.selected           = null;
     self.toggleNav          = toggleNav;
@@ -98,7 +97,7 @@
 
       $http({
         method: 'GET',
-        url: baseUrl + 'api/burn',
+        url: constants.apiBaseUrl + 'api/burn',
         params: data
       }).then(function successCallback(response) {
         console.log('burn response', response);
