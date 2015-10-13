@@ -1,0 +1,120 @@
+{% raw %}
+<html lang="en">
+
+<head>
+  <title>Unacceptable</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="UW Calhacks 2015">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+  <link rel="stylesheet" href="/static/bower_components/angular-material/angular-material.min.css">
+  <link href='https://fonts.googleapis.com/css?family=Aladin' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="/static/assets/css/app.css">
+  <link rel="stylesheet" href="/static/assets/css/home.css">
+  <link rel="stylesheet" href="/static/assets/css/posts.css">
+  <link rel="stylesheet" href="/static/assets/css/post.css">
+
+  <link rel="shortcut icon" href="/static/assets/images/favicon.png">
+</head>
+
+<body ng-app="myApp" layout="column" ng-controller="AppController as ctrl">
+
+  <!-- Toolbar -->
+  <md-toolbar class="md-whiteframe-z1">
+    <div class="md-toolbar-tools" layout layout-align="space-between center">
+
+      <!-- Left Side -->
+      <md-button class="md-icon-button" ng-click="ctrl.toggleNav()" aria-label="Menu">
+        <md-icon md-svg-icon="navigation:menu" class="hamburgerMenu"></md-icon>
+      </md-button>
+
+      <md-button class="md-accent" ng-href="/app" aria-label="Home">
+        <div layout layout-align="center center">
+          <img width="20" height="20" src="/static/assets/images/favicon.png" />
+          <h1 class="toolbar-logo">Unacceptable</h1>
+        </div>
+      </md-button>
+
+      <md-button class="md-accent md-icon-button" ng-click="ctrl.toggleAddPleasure()" aria-label="Add">
+        <md-icon ng-if="ctrl.showAddPleasure" md-svg-icon="content:remove"></md-icon>
+        <md-icon ng-if="!ctrl.showAddPleasure" md-svg-icon="content:add"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+
+  <section class="frame" layout="row" flex>
+
+    <!-- Sidenav -->
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2 sidenav" md-component-id="left">
+      <md-content class="sidenav-content">
+        <div class="name-container" layout="column" layout-align="start start">
+          <div layout layout-align="start center">
+            <img class="scorecard-profile" src="/static/assets/images/profile.jpg" alt="Evgeny" />
+            <h1 class="name md-display-1">Evgeny</h1>
+          </div>
+          <div layout>
+            <md-icon md-svg-icon="communication:location_on"></md-icon>
+            <h3 class="md-subhead name-location">Waterloo, ON</h3>
+          </div>
+          <div layout>
+            <md-icon class="name-icon" md-svg-icon="action:accessibility"></md-icon>
+            <h4 class="md-subhead name-description">Male</h4>
+            <md-icon class="name-icon" md-svg-icon="social:person"></md-icon>
+            <h4 class="md-subhead name-description">20 yrs</h4>
+            <md-icon class="name-icon" md-svg-icon="maps:directions_walk"></md-icon>
+            <h4 class="md-subhead name-description">160 lbs</h4>
+          </div>
+        </div>
+        <md-list>
+          <a ng-repeat="item in ctrl.mobileNav" class="navLink">
+            <md-list-item class="md-2-line navItem" ng-click="ctrl.navClick(item.href)">
+              <md-icon md-svg-icon="{{item.svg}}" class="navIcon"></md-icon>
+              <div class="md-list-item-text">
+                <h3 class="navTitle"> {{ item.title }} </h3>
+              </div>
+            </md-list-item>
+          </a>
+        </md-list>
+      </md-content>
+    </md-sidenav>
+
+    <!-- Main Content -->
+    <md-content flex>
+
+      <div ng-view></div>
+
+    </md-content>
+
+  </section>
+
+  <!-- Angular Material Dependencies -->
+  <script src="/static/bower_components/angular/angular.min.js"></script>
+  <script src="/static/bower_components/angular-route/angular-route.min.js"></script>
+  <script src="/static/bower_components/angular-animate/angular-animate.min.js"></script>
+  <script src="/static/bower_components/angular-aria/angular-aria.min.js"></script>
+  <script src="/static/bower_components/angular-material/angular-material.min.js"></script>
+
+  <!-- App Dependencies -->
+  <script src="/static/components/app/App.js"></script>
+  <script src="/static/components/app/AppController.js"></script>
+  <script src="/static/components/app/AppService.js"></script>
+  <script src="/static/components/app/AppFilter.js"></script>
+  <script src="/static/components/home/Home.js"></script>
+  <script src="/static/components/home/HomeController.js"></script>
+  <script src="/static/components/home/HomeService.js"></script>
+  <script src="/static/components/home/HomeDirective.js"></script>
+  <script src="/static/components/posts/Posts.js"></script>
+  <script src="/static/components/posts/PostsController.js"></script>
+  <script src="/static/components/posts/PostsService.js"></script>
+  <script src="/static/components/post/Post.js"></script>
+  <script src="/static/components/post/PostController.js"></script>
+  <script src="/static/components/post/PostService.js"></script>
+  <script src="/static/app.js"></script>
+
+</body>
+
+</html>
+{% endraw %}
