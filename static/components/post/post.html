@@ -17,11 +17,14 @@
     </md-grid-list>
   </div>
 
+  <div class="full" ng-show="ctrl.loading" layout layout-align="center center">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+  </div>
 
-  <div class="full" layout="column" layout-align="start center">
+  <div ng-show="!ctrl.loading" class="full" layout="column" layout-align="start center">
 
     <!-- Walk -->
-    <div class="full action-row" layout layout-align="space-between center" ng-click="ctrl.goToMap()">
+    <div class="full action-row" layout layout-align="space-between center" ng-click="ctrl.goToMap('walking')">
       <h3 class="md-title">Walk</h3>
       <div layout layout-align="start center">
         <md-icon class="distance-time-icon" md-svg-icon="maps:navigation"></md-icon>
@@ -35,7 +38,7 @@
     </div>
 
     <!-- Run -->
-    <div class="full action-row" layout layout-align="space-between center" ng-click="ctrl.goToMap()">
+    <div class="full action-row" layout layout-align="space-between center" ng-click="ctrl.goToMap('biking')">
       <h3 class="md-title">Run</h3>
       <div layout layout-align="start center">
         <md-icon class="distance-time-icon" md-svg-icon="maps:navigation"></md-icon>
@@ -49,7 +52,7 @@
     </div>
 
     <!-- Bike -->
-    <div class="full action-row" layout layout-align="space-between center" ng-click="ctrl.goToMap()">
+    <div class="full action-row" layout layout-align="space-between center" ng-click="ctrl.goToMap('cycling')">
       <h3 class="md-title">Bike</h3>
       <div layout layout-align="start center">
         <md-icon class="distance-time-icon" md-svg-icon="maps:navigation"></md-icon>

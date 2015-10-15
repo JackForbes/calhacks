@@ -3,7 +3,7 @@
   angular
        .module('app', [])
        .controller('AppController', [
-          'AppService', 'constants', '$mdSidenav', '$mdBottomSheet', '$mdDialog', '$location', '$q', '$http',
+          'AppService', 'constants', '$mdSidenav', '$mdBottomSheet', '$mdDialog', '$location', '$q', '$http', '$sce',
           AppController
        ]);
 
@@ -15,9 +15,10 @@
    * @param avatarsService
    * @constructor
    */
-  function AppController( AppService, constants, $mdSidenav, $mdBottomSheet, $mdDialog, $location, $q, $http) {
+  function AppController( AppService, constants, $mdSidenav, $mdBottomSheet, $mdDialog, $location, $q, $http, $sce) {
     var self = this;
 
+    self.loading            = false;
     self.selected           = null;
     self.toggleNav          = toggleNav;
     self.navClick           = navClick;
@@ -27,6 +28,8 @@
     self.chosenPleasures    = [];
     self.activities         = {};
     self.submitPleasures    = submitPleasures;
+    self.activityType       = '';
+    self.mapHtml            = '';
     self.goToMap            = goToMap;
 
 
@@ -68,8 +71,20 @@
     /**
      * Change location
      */
-    function goToMap() {
-      $location.path('map');
+    function goToMap(type) {
+      self.loading = true;
+      $http({
+        method: 'GET',
+        params: {'activity_type': type},
+        url: constants.apiBaseUrl + 'api/nearest_embedded_route'
+      }).then(function successCallback(response) {
+          $location.path('map');
+          self.mapHtml = $sce.trustAsHtml(response.data.template);
+          self.loading = false;
+        }, function errorCallback(response) {
+          self.loading = false;
+        });
+
     }
 
     /**
@@ -83,6 +98,8 @@
      * Submit Pleasures
      */
     function submitPleasures(desserts) {
+      self.loading = true;
+      self.chosenPleasures = [];
       var data = {
         weight: 160,
         stuff: []
@@ -91,7 +108,6 @@
         if (obj.count > 0) {
           data.stuff.push(obj);
           self.chosenPleasures.push(obj);
-          console.log('chosen pleasures', self.chosenPleasures);
         }
       });
 
@@ -100,9 +116,10 @@
         url: constants.apiBaseUrl + 'api/burn',
         params: data
       }).then(function successCallback(response) {
-        console.log('burn response', response);
-        self.activities = response.data.activities.activities;
+          self.activities = response.data.activities.activities;
+          self.loading = false;
         }, function errorCallback(response) {
+          self.loading = false;
         });
 
       $location.path('penance');
@@ -131,10 +148,9 @@
         function TodoSheetController( $mdBottomSheet ) {
           this.list = list;
           this.items = [
-            // { name: 'Facebook'    , icon: 'facebook'    , icon_url: 'assets/svg/facebook.svg'},
-            { name: 'Twitter'     , icon: 'twitter'     , icon_url: 'static/assets/svg/twitter.svg'},
-            { name: 'Google+'     , icon: 'google_plus' , icon_url: 'static/assets/svg/google_plus.svg'},
-            { name: 'Hangout'     , icon: 'hangouts'    , icon_url: 'static/assets/svg/hangouts.svg'}
+            { name: 'Twitter'     , icon: 'twitter'     , icon_url: '/static/assets/svg/twitter.svg'},
+            { name: 'Google+'     , icon: 'google_plus' , icon_url: '/static/assets/svg/google_plus.svg'},
+            { name: 'Hangout'     , icon: 'hangouts'    , icon_url: '/static/assets/svg/hangouts.svg'}
           ];
           this.performAction = function(action) {
             $mdBottomSheet.hide(action);

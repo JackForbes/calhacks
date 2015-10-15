@@ -1,5 +1,5 @@
 {% raw %}
-<html lang="en">
+<html lang<html lang="en">
 
 <head>
   <title>Unacceptable</title>
@@ -21,6 +21,8 @@
 </head>
 
 <body ng-app="myApp" layout="column" ng-controller="AppController as ctrl">
+
+  <md-progress-linear ng-show="ctrl.loading" md-mode="indeterminate"></md-progress-linear>
 
   <!-- Toolbar -->
   <md-toolbar class="md-whiteframe-z1">
@@ -48,11 +50,11 @@
   <section class="frame" layout="row" flex>
 
     <!-- Sidenav -->
-    <md-sidenav class="md-sidenav-left md-whiteframe-z2 sidenav" md-component-id="left">
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2 sidenav" md-component-id="left" ng-cloak>
       <md-content class="sidenav-content">
         <div class="name-container" layout="column" layout-align="start start">
           <div layout layout-align="start center">
-            <img class="scorecard-profile" src="/static/assets/images/profile.jpg" alt="Evgeny" />
+            <img class="scorecard-profile" src="assets/images/profile.jpg" alt="Evgeny" />
             <h1 class="name md-display-1">Evgeny</h1>
           </div>
           <div layout>
