@@ -10,7 +10,7 @@ angular.module('myApp', [
     'app.post'
   ])
   .constant("constants", {
-        "apiBaseUrl": "http://127.0.0.1:5000/"
+        "apiBaseUrl": "https://127.0.0.1:5000/"
     })
   .config(function($routeProvider, $httpProvider, $mdThemingProvider, $mdIconProvider) {
     $routeProvider.when('/', {
