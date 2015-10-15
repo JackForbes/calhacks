@@ -129,33 +129,33 @@
      * Show the bottom sheet
      */
     function share($event) {
-        var list = self.selected;
+      var list = self.selected;
 
-        $mdBottomSheet.show({
-          parent: angular.element(document.getElementById('content')),
-          templateUrl: 'components/home/view/shareSheet.html',
-          controller: [ '$mdBottomSheet', TodoSheetController ],
-          controllerAs: "vm",
-          bindToController : true,
-          targetEvent: $event
-        }).then(function(clickedItem) {
-          //Do something
-        });
+      $mdBottomSheet.show({
+        parent: angular.element(document.getElementById('content')),
+        templateUrl: 'components/home/view/shareSheet.html',
+        controller: [ '$mdBottomSheet', TodoSheetController ],
+        controllerAs: "vm",
+        bindToController : true,
+        targetEvent: $event
+      }).then(function(clickedItem) {
+        //Do something
+      });
 
-        /**
-         * Bottom Sheet controller for the Avatar Actions
-         */
-        function TodoSheetController( $mdBottomSheet ) {
-          this.list = list;
-          this.items = [
-            { name: 'Twitter'     , icon: 'twitter'     , icon_url: '/static/assets/svg/twitter.svg'},
-            { name: 'Google+'     , icon: 'google_plus' , icon_url: '/static/assets/svg/google_plus.svg'},
-            { name: 'Hangout'     , icon: 'hangouts'    , icon_url: '/static/assets/svg/hangouts.svg'}
-          ];
-          this.performAction = function(action) {
-            $mdBottomSheet.hide(action);
-          };
-        }
+      /**
+       * Bottom Sheet controller for the Avatar Actions
+       */
+      function TodoSheetController( $mdBottomSheet ) {
+        this.list = list;
+        this.items = [
+          { name: 'Twitter'     , icon: 'twitter'     , icon_url: '/static/assets/svg/twitter.svg'},
+          { name: 'Google+'     , icon: 'google_plus' , icon_url: '/static/assets/svg/google_plus.svg'},
+          { name: 'Hangout'     , icon: 'hangouts'    , icon_url: '/static/assets/svg/hangouts.svg'}
+        ];
+        this.performAction = function(action) {
+          $mdBottomSheet.hide(action);
+        };
+      }
     }
 
   }

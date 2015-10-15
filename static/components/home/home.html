@@ -11,7 +11,12 @@
     </md-button>
   </div>
 
-  <!-- Cities -->
+  <!-- Loading Spinner -->
+  <div class="full" ng-show="homeCtrl.loading" layout layout-align="center center">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+  </div>
+
+  <!-- Pleasures/Desserts -->
   <div class="desserts">
     <md-grid-list
         md-cols="2" md-cols-gt-sm="3" md-cols-gt-lg="4"

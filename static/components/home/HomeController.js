@@ -18,24 +18,38 @@
   function HomeController( HomeService, constants, $mdSidenav, $mdBottomSheet, $mdToast, $http, $q) {
     var self = this;
 
+    self.loading         = false;
     self.decrementCount  = decrementCount;
     self.incrementCount  = incrementCount;
     self.dessertChosen   = dessertChosen;
     self.newPleasure     = '';
     self.addPleasure     = addPleasure;
 
-    $http({
-      method: 'GET',
-      url: constants.apiBaseUrl + 'api/pleasures'
-    }).then(function successCallback(response) {
-        self.desserts = [].concat(response.data.pleasures);
-      }, function errorCallback(response) {
-        HomeService
-          .loadAllItems()
-          .then( function( items ) {
-            self.desserts = [].concat(items.desserts);
-          });
-      });
+
+
+    /**
+     * Initialize App by loading pleasures
+     */
+    function init() {
+      self.loading = true;
+      $http({
+        method: 'GET',
+        url: constants.apiBaseUrl + 'api/pleasures'
+      }).then(function successCallback(response) {
+          self.loading = false;
+          self.desserts = [].concat(response.data.pleasures);
+        }, function errorCallback(response) {
+          self.loading = false;
+          HomeService
+            .loadAllItems()
+            .then( function( items ) {
+              self.desserts = [].concat(items.desserts);
+            });
+        });
+    }
+
+    init();
+    
 
     /**
      * Decrement Count
